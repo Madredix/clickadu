@@ -4,8 +4,6 @@ import (
 	"github.com/Madredix/clickadu/src/domain"
 	"github.com/oleiade/lane"
 	"github.com/sirupsen/logrus"
-	"net/http"
-	"strings"
 	"sync"
 	"time"
 )
@@ -34,7 +32,7 @@ func NewQueue(logger *logrus.Logger) Queue {
 }
 
 func (q *queue) Push(task domain.Task) error {
-	q.logger.WithField(`action`, `push`).Debug(task)
+	q.logger.WithField(`action`, `push`).Debug(interfaceToJSON(task))
 	q.queue.Enqueue(task)
 	q.status.Tasks.InQueue++
 	q.status.Urls.InQueue += len(task)
@@ -95,20 +93,4 @@ func (q *queue) worker(task domain.Task, wg *sync.WaitGroup) {
 	if !ok {
 		q.status.Tasks.Error++
 	}
-}
-
-func getData(url string) error {
-	req, err := http.NewRequest("GET", url, strings.NewReader(""))
-	if err != nil {
-		return err
-	}
-	client := http.DefaultClient
-	client.Timeout = time.Duration(timeout)
-
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-
-	return resp.Body.Close()
 }
