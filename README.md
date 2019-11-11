@@ -16,7 +16,7 @@
 * `make test-unit`
 
 # Запуск в Docker
-* `docker build -t clickadu . && docker run -it clickadu`
+* `docker build -t clickadu . && docker run -p 2000:2000 -it clickadu`
 
 # Примеры запросов
 * `curl -X POST -H "Content-Type: application/json" -d '[{"url": "http://yandex.ru", "number_of_requests": 3},{"url": "http://google.com", "number_of_requests": 3}]' http://localhost:2000/add`
