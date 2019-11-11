@@ -1,0 +1,100 @@
+swagger: "2.0"
+info:
+  description: "Sample URL requester server"
+  version: "1.0.0"
+  title: "URL Requester"
+  contact:
+    email: "paveldev@clickadu.com"
+host: "localhost"
+basePath: "/"
+tags:
+- name: "task"
+  description: "Task manadgement"
+schemes:
+- "http"
+paths:
+  /add:
+    post:
+      tags:
+      - "task"
+      summary: "Add a new task to Url Requester"
+      description: "Add urls to request list. Service should request every URL number_of_requests times"
+      operationId: "addTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of URLs to request"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Task"
+      responses:
+        200:
+          description: "Task added"
+        405:
+          description: "Invalid input"
+  /status:
+    get:
+      tags:
+      - "task"
+      summary: "Get status"
+      description: "Reports about URL request statistics"
+      operationId: "getStatus"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful stats"
+          schema:
+            $ref: "#/definitions/Stats"
+definitions:
+  Task:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+      number_of_requests:
+        type: "integer"
+        format: "int16"
+    xml:
+      name: "Task"
+  Stats:
+    type: "object"
+    properties:
+      tasks:
+        type: "object"
+        properties:
+          total:
+            type: "integer"
+            format: "int16"
+          in_queue:
+            type: "integer"
+            format: "int16"
+          complete:
+            type: "integer"
+            format: "int16"
+          error:
+            type: "integer"
+            format: "int16"
+      urls:
+        type: "object"
+        properties:
+          total:
+            type: "integer"
+            format: "int16"
+          in_queue:
+            type: "integer"
+            format: "int16"
+          complete:
+            type: "integer"
+            format: "int16"
+          error:
+            type: "integer"
+            format: "int16"
+    xml:
+      name: "Stats"

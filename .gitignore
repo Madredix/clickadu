@@ -1,0 +1,12 @@
+# UX
+.DS_Store
+.idea
+.vscode
+*.out
+
+# Project-local
+/app
+/bin
+/cmd
+/models
+/restapi

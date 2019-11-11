@@ -1,0 +1,11 @@
+{
+  "environment": "local",
+  "log": {
+    "level": "debug",
+    "format": "json",
+    "output": "stdout"
+  },
+  "http": {
+    "port": 2000
+  }
+}
